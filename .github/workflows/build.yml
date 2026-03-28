@@ -17,11 +17,11 @@ jobs:
         include:
           - os: windows-latest
             platform: win
-            artifact: "dist/*.exe"
+            artifact: "dist/SoundPilot*.exe"
             label: Windows
           - os: macos-latest
             platform: mac
-            artifact: "dist/*.dmg"
+            artifact: "dist/SoundPilot*.dmg"
             label: macOS
 
     name: Build (${{ matrix.label }})
@@ -41,9 +41,9 @@ jobs:
         run: npm ci
 
       - name: Build & package
-        run: npm run dist
+        run: npm run build && npx electron-builder --publish never
         env:
-          # Prevents electron-builder from failing on missing code-sign identity on macOS
+          # Skip macOS code-signing (no certificate in CI)
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: Upload artifact
