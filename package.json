@@ -10,7 +10,13 @@
     "dist": "npm run build && electron-builder",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.node.json --noEmit"
   },
-  "keywords": ["audio", "eq", "mixer", "electron", "live-sound"],
+  "keywords": [
+    "audio",
+    "eq",
+    "mixer",
+    "electron",
+    "live-sound"
+  ],
   "author": "SoundPilot",
   "license": "MIT",
   "dependencies": {
@@ -26,8 +32,10 @@
     "electron": "^31.1.0",
     "electron-builder": "^24.13.3",
     "electron-vite": "^2.3.0",
+    "png-to-ico": "^3.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "sharp": "^0.34.5",
     "typescript": "^5.5.2",
     "vite": "^5.3.1"
   },
@@ -42,16 +50,19 @@
     ],
     "mac": {
       "category": "public.app-category.music",
+      "icon": "assets/icon-mac.png",
       "target": [
         { "target": "dmg", "arch": ["x64", "arm64"] }
       ]
     },
     "win": {
+      "icon": "assets/icon.ico",
       "target": [
         { "target": "nsis", "arch": ["x64"] }
       ]
     },
     "linux": {
+      "icon": "assets/icon.png",
       "target": ["AppImage"]
     }
   }
