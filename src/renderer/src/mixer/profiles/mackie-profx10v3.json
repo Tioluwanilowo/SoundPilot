@@ -1,0 +1,48 @@
+{
+  "id": "mackie-profx10v3",
+  "brand": "Mackie",
+  "model": "ProFX10v3",
+  "type": "analog",
+  "channelCount": 10,
+  "controlNotes": "The ProFX10v3 has a 3-band EQ on mic/line channels: High shelf (12kHz), Mid sweep (100Hz–8kHz), Low shelf (80Hz). The Mid band is fully sweepable with a separate frequency knob. HPF (Low Cut) is a switch at 100Hz on each channel. Boost/cut range is +/-15dB for all bands.",
+  "hpf": {
+    "available": true,
+    "frequency": 100,
+    "sweepable": false
+  },
+  "eqBands": [
+    {
+      "id": "high",
+      "name": "High",
+      "type": "shelf_high",
+      "frequency": 12000,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB shelf at 12kHz"
+    },
+    {
+      "id": "mid",
+      "name": "Mid",
+      "type": "peaking",
+      "frequencyRange": [100, 8000],
+      "defaultFrequency": 2500,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB sweep 100Hz–8kHz"
+    },
+    {
+      "id": "low",
+      "name": "Low",
+      "type": "shelf_low",
+      "frequency": 80,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB shelf at 80Hz"
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "Locate Channel {channel} on the ProFX10v3",
+    "openEQ": "Find the 3-band EQ section on CH {channel}: High, Mid (with sweep), and Low knobs",
+    "enableHPF": "Press the LOW CUT switch on CH {channel} to engage the 100Hz HPF",
+    "setBandFrequency": "Turn the {band} frequency knob to approximately {frequency}Hz",
+    "setBandGain": "Turn the {band} knob {direction} by approximately {amount}dB",
+    "saveSettings": "No save needed — analog settings are retained by knob position"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": "yamaha-mg10xuf",
+  "brand": "Yamaha",
+  "model": "MG10XUF",
+  "type": "analog",
+  "channelCount": 10,
+  "controlNotes": "The MG10XUF has a 4-band semi-parametric EQ on channels 1-4 (mono). The High and Low bands are shelving; the High Mid and Low Mid are sweepable bell curves. Turn knobs clockwise to boost, counter-clockwise to cut.",
+  "hpf": {
+    "available": true,
+    "frequency": 80,
+    "sweepable": false
+  },
+  "eqBands": [
+    {
+      "id": "high",
+      "name": "Hi",
+      "type": "shelf_high",
+      "frequency": 10000,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB shelf at 10kHz"
+    },
+    {
+      "id": "highMid",
+      "name": "Hi-Mid",
+      "type": "peaking",
+      "frequencyRange": [1600, 12000],
+      "defaultFrequency": 3000,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB sweep 1.6k–12kHz"
+    },
+    {
+      "id": "lowMid",
+      "name": "Lo-Mid",
+      "type": "peaking",
+      "frequencyRange": [200, 3200],
+      "defaultFrequency": 500,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB sweep 200Hz–3.2kHz"
+    },
+    {
+      "id": "low",
+      "name": "Lo",
+      "type": "shelf_low",
+      "frequency": 80,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB shelf at 80Hz"
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "Locate Channel {channel} on the mixer",
+    "openEQ": "Find the EQ section on CH {channel} (the 4 knobs labeled Hi, Hi-Mid, Lo-Mid, Lo)",
+    "enableHPF": "Press the HIGH PASS FILTER button on CH {channel} — this activates the 80Hz low-cut",
+    "setBandFrequency": "Turn the {band} FREQUENCY knob to approximately {frequency}Hz",
+    "setBandGain": "Turn the {band} knob {direction} by approximately {amount}dB",
+    "saveSettings": "No save needed — analog settings are retained by knob position"
+  }
+}

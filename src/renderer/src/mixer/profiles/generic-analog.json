@@ -1,0 +1,52 @@
+{
+  "id": "generic-analog",
+  "brand": "Generic",
+  "model": "Analog Mixer",
+  "type": "analog",
+  "controlNotes": "Instructions use standard analog mixer terminology. Locate the EQ section on the channel strip. Most analog mixers have 3–4 EQ bands with knobs for gain. Sweepable bands also have a frequency knob. Turn clockwise to boost, counter-clockwise to cut.",
+  "hpf": {
+    "available": true,
+    "frequency": 100,
+    "sweepable": false
+  },
+  "eqBands": [
+    {
+      "id": "high",
+      "name": "High / Treble",
+      "type": "shelf_high",
+      "frequency": 10000,
+      "gainRange": [-15, 15]
+    },
+    {
+      "id": "highMid",
+      "name": "High Mid",
+      "type": "peaking",
+      "frequencyRange": [1000, 12000],
+      "defaultFrequency": 3000,
+      "gainRange": [-15, 15]
+    },
+    {
+      "id": "lowMid",
+      "name": "Low Mid",
+      "type": "peaking",
+      "frequencyRange": [200, 2000],
+      "defaultFrequency": 400,
+      "gainRange": [-15, 15]
+    },
+    {
+      "id": "low",
+      "name": "Low / Bass",
+      "type": "shelf_low",
+      "frequency": 80,
+      "gainRange": [-15, 15]
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "Locate Channel {channel} on the mixer",
+    "openEQ": "Find the EQ knobs on CH {channel}",
+    "enableHPF": "Enable the HIGH PASS (LOW CUT) filter switch on CH {channel}",
+    "setBandFrequency": "Turn the {band} frequency sweep knob to approximately {frequency}Hz",
+    "setBandGain": "Turn the {band} gain knob {direction} to adjust by approximately {amount}dB",
+    "saveSettings": "No save required — analog settings are held by the physical knob positions"
+  }
+}

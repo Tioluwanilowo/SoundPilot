@@ -1,0 +1,63 @@
+{
+  "id": "allen-heath-sq5",
+  "brand": "Allen & Heath",
+  "model": "SQ-5",
+  "type": "digital",
+  "channelCount": 48,
+  "controlNotes": "The SQ-5 has a fully parametric 4-band PEQ plus HPF/LPF per channel. Access by selecting the channel strip, then tapping the PEQ tab on the touchscreen. The dedicated Processing Knob controls the selected parameter. Long-press a band button to reset to defaults.",
+  "hpf": {
+    "available": true,
+    "sweepable": true,
+    "frequencyRange": [20, 2000]
+  },
+  "eqBands": [
+    {
+      "id": "hf",
+      "name": "HF Band",
+      "type": "shelf_high",
+      "frequencyRange": [1000, 20000],
+      "defaultFrequency": 12000,
+      "gainRange": [-20, 20],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    },
+    {
+      "id": "hmf",
+      "name": "HMF Band",
+      "type": "peaking",
+      "frequencyRange": [300, 20000],
+      "defaultFrequency": 3000,
+      "gainRange": [-20, 20],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "lmf",
+      "name": "LMF Band",
+      "type": "peaking",
+      "frequencyRange": [60, 5000],
+      "defaultFrequency": 500,
+      "gainRange": [-20, 20],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "lf",
+      "name": "LF Band",
+      "type": "shelf_low",
+      "frequencyRange": [20, 2000],
+      "defaultFrequency": 80,
+      "gainRange": [-20, 20],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "Touch CH {channel} on the touchscreen to bring up its processing strip",
+    "openEQ": "Tap the PEQ tab in the processing section on the touchscreen",
+    "enableHPF": "Tap the HPF button to enable it, then tap the HPF frequency and use the Processing Knob to set {frequency}Hz",
+    "setBandFrequency": "Tap the {band} circle on the PEQ display, then use the Processing Knob to sweep to {frequency}Hz",
+    "setBandGain": "With {band} selected, rotate the Processing Knob to set gain to {amount}dB",
+    "saveSettings": "Press the SAVE button or store to the current scene via the Scenes menu."
+  }
+}

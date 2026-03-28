@@ -1,0 +1,62 @@
+{
+  "id": "generic-digital",
+  "brand": "Generic",
+  "model": "Digital Mixer",
+  "type": "digital",
+  "controlNotes": "Instructions use standard digital mixer terminology. Select the channel, navigate to the EQ or Processing section, and adjust each band using the touchscreen or encoders. Digital mixers typically have fully parametric EQ with sweepable frequency, adjustable gain, and variable Q per band.",
+  "hpf": {
+    "available": true,
+    "sweepable": true,
+    "frequencyRange": [20, 500]
+  },
+  "eqBands": [
+    {
+      "id": "band4",
+      "name": "Band 4 (High)",
+      "type": "shelf_high",
+      "frequencyRange": [2000, 20000],
+      "defaultFrequency": 10000,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    },
+    {
+      "id": "band3",
+      "name": "Band 3 (Hi-Mid)",
+      "type": "peaking",
+      "frequencyRange": [500, 15000],
+      "defaultFrequency": 3000,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "band2",
+      "name": "Band 2 (Lo-Mid)",
+      "type": "peaking",
+      "frequencyRange": [100, 3000],
+      "defaultFrequency": 500,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "band1",
+      "name": "Band 1 (Low)",
+      "type": "shelf_low",
+      "frequencyRange": [20, 500],
+      "defaultFrequency": 80,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "Select CH {channel} on the mixer",
+    "openEQ": "Open the EQ / Processing screen for CH {channel}",
+    "enableHPF": "Enable the HPF (High-Pass Filter) and set the frequency to {frequency}Hz",
+    "setBandFrequency": "Select {band} and adjust the frequency to {frequency}Hz",
+    "setBandGain": "Set the gain on {band} to {amount}dB",
+    "saveSettings": "Save the current scene or preset as needed"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "behringer-xr18",
+  "brand": "Behringer",
+  "model": "XR18",
+  "type": "digital",
+  "channelCount": 18,
+  "controlNotes": "The XR18 is a tablet/app-controlled digital rack mixer. Access channel EQ via the X Air app (iOS, Android, or Mac/PC): select a channel, then tap the EQ section. The EQ is fully parametric with 4 bands plus a sweepable HPF. Adjustments are made by dragging EQ nodes or using on-screen sliders. Changes are applied in real-time with no save required during a session.",
+  "hpf": {
+    "available": true,
+    "sweepable": true,
+    "frequencyRange": [20, 500]
+  },
+  "eqBands": [
+    {
+      "id": "band4",
+      "name": "Band 4 (High)",
+      "type": "shelf_high",
+      "frequencyRange": [2000, 20000],
+      "defaultFrequency": 10000,
+      "gainRange": [-15, 15],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    },
+    {
+      "id": "band3",
+      "name": "Band 3 (Hi-Mid)",
+      "type": "peaking",
+      "frequencyRange": [500, 15000],
+      "defaultFrequency": 3000,
+      "gainRange": [-15, 15],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "band2",
+      "name": "Band 2 (Lo-Mid)",
+      "type": "peaking",
+      "frequencyRange": [200, 3000],
+      "defaultFrequency": 500,
+      "gainRange": [-15, 15],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "band1",
+      "name": "Band 1 (Low)",
+      "type": "shelf_low",
+      "frequencyRange": [20, 500],
+      "defaultFrequency": 80,
+      "gainRange": [-15, 15],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "Open the X Air app and tap Channel {channel} in the channel list",
+    "openEQ": "Tap the EQ tab in the channel processing view for CH {channel}",
+    "enableHPF": "Enable the HPF (High-Pass Filter) toggle and drag the HP node to {frequency}Hz",
+    "setBandFrequency": "Tap and drag the {band} node horizontally to {frequency}Hz, or use the frequency fader",
+    "setBandGain": "Drag the {band} node vertically to {amount}dB, or use the Gain fader",
+    "saveSettings": "Tap the SCENES button and save the current state to a scene slot for recall"
+  }
+}

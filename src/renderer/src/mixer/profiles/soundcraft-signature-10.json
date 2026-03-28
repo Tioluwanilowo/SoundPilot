@@ -1,0 +1,48 @@
+{
+  "id": "soundcraft-signature-10",
+  "brand": "Soundcraft",
+  "model": "Signature 10",
+  "type": "analog",
+  "channelCount": 10,
+  "controlNotes": "The Signature 10 has a 3-band EQ on mono channels 1-8: High shelf (12kHz), Mid sweep (250Hz–5kHz), and Low shelf (80Hz). The HF and LF are simple shelving boost/cut knobs. The Mid band has both a frequency sweep knob and a gain knob. HPF is a dedicated button on each channel.",
+  "hpf": {
+    "available": true,
+    "frequency": 100,
+    "sweepable": false
+  },
+  "eqBands": [
+    {
+      "id": "hf",
+      "name": "HF",
+      "type": "shelf_high",
+      "frequency": 12000,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB high shelf at 12kHz"
+    },
+    {
+      "id": "mid",
+      "name": "Mid",
+      "type": "peaking",
+      "frequencyRange": [250, 5000],
+      "defaultFrequency": 1200,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB sweep 250Hz–5kHz"
+    },
+    {
+      "id": "lf",
+      "name": "LF",
+      "type": "shelf_low",
+      "frequency": 80,
+      "gainRange": [-15, 15],
+      "gainLabel": "+/-15dB low shelf at 80Hz"
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "Locate Channel {channel} on the Signature 10",
+    "openEQ": "Find the 3-band EQ section on CH {channel} (three stacked knobs: HF, Mid, LF)",
+    "enableHPF": "Press the HPF button on CH {channel} to engage the 100Hz low-cut filter",
+    "setBandFrequency": "Turn the {band} SWEEP knob to approximately {frequency}Hz",
+    "setBandGain": "Turn the {band} knob {direction} to adjust by approximately {amount}dB",
+    "saveSettings": "No save needed — analog settings are retained by knob position"
+  }
+}

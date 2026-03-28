@@ -1,0 +1,63 @@
+{
+  "id": "behringer-x32",
+  "brand": "Behringer",
+  "model": "X32",
+  "type": "digital",
+  "channelCount": 32,
+  "controlNotes": "The X32 has a fully parametric 4-band EQ plus HPF per channel. Access channel EQ by pressing the channel's SELECT button, then pressing the EQ button above the main display. Each band is fully parametric (Frequency, Gain, Q). Adjustments are made with the dedicated rotary encoders below the display.",
+  "hpf": {
+    "available": true,
+    "sweepable": true,
+    "frequencyRange": [20, 400]
+  },
+  "eqBands": [
+    {
+      "id": "band4",
+      "name": "Band 4 (High)",
+      "type": "shelf_high",
+      "frequencyRange": [2000, 20000],
+      "defaultFrequency": 10000,
+      "gainRange": [-15, 15],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    },
+    {
+      "id": "band3",
+      "name": "Band 3 (Hi-Mid)",
+      "type": "peaking",
+      "frequencyRange": [500, 15000],
+      "defaultFrequency": 3000,
+      "gainRange": [-15, 15],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "band2",
+      "name": "Band 2 (Lo-Mid)",
+      "type": "peaking",
+      "frequencyRange": [200, 3000],
+      "defaultFrequency": 500,
+      "gainRange": [-15, 15],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "band1",
+      "name": "Band 1 (Low)",
+      "type": "shelf_low",
+      "frequencyRange": [20, 500],
+      "defaultFrequency": 80,
+      "gainRange": [-15, 15],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "Press the SELECT button on CH {channel} to select it",
+    "openEQ": "Press the EQ button (top section of the main display area) to open the EQ screen",
+    "enableHPF": "On the EQ screen, press the HPF enable button and set the frequency to {frequency}Hz using the encoder",
+    "setBandFrequency": "Select {band} using the band selector buttons, then turn the FREQ encoder to {frequency}Hz",
+    "setBandGain": "With {band} selected, turn the GAIN encoder to {amount}dB",
+    "saveSettings": "Settings are saved automatically. Optionally store to a scene or channel preset."
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "soundcraft-ui16",
+  "brand": "Soundcraft",
+  "model": "Ui16",
+  "type": "digital",
+  "channelCount": 16,
+  "controlNotes": "The Soundcraft Ui16 is a browser-controlled digital rack mixer with 16 remote-controllable inputs (12 mic/line XLR combo + 2 stereo RCA pairs + 1 stereo 3.5mm). Connect your device to the Ui16's Wi-Fi network (or Ethernet) and open Chrome to the mixer's IP address (default: 192.168.1.1 / ui16.local). Each mono channel has a fully parametric 4-band EQ plus a sweepable HPF, gate, compressor, and delay. Phantom power (+48V) is per-channel in the Preamp tab. NOTE: The Ui16's USB port supports 2-channel direct-to-memory recording only — it does NOT function as a multi-channel audio interface to a DAW. To analyze individual channels in SoundPilot, use the mixer's Solo/PFL output routed to your audio interface input and solo each channel in turn.",
+  "hpf": {
+    "available": true,
+    "sweepable": true,
+    "frequencyRange": [20, 500]
+  },
+  "eqBands": [
+    {
+      "id": "hf",
+      "name": "HF",
+      "type": "shelf_high",
+      "frequencyRange": [2000, 20000],
+      "defaultFrequency": 10000,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    },
+    {
+      "id": "hi-mid",
+      "name": "Hi-Mid",
+      "type": "peaking",
+      "frequencyRange": [500, 15000],
+      "defaultFrequency": 3000,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "lo-mid",
+      "name": "Lo-Mid",
+      "type": "peaking",
+      "frequencyRange": [100, 3000],
+      "defaultFrequency": 500,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "lf",
+      "name": "LF",
+      "type": "shelf_low",
+      "frequencyRange": [20, 500],
+      "defaultFrequency": 80,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "In the Soundcraft Ui app, tap the CH {channel} strip at the top to select it and open its channel view",
+    "openEQ": "In the channel view, tap the EQ tab to open the 4-band parametric EQ",
+    "enableHPF": "In the EQ tab, tap the HPF button to enable the high-pass filter, then drag the HPF frequency knob to {frequency}Hz",
+    "setBandFrequency": "Tap the {band} band, then drag the Frequency knob (or double-tap to type) to {frequency}Hz",
+    "setBandGain": "Drag the {band} Gain knob {direction} to set approximately {amount}dB. The EQ curve updates in real time.",
+    "saveSettings": "Tap the menu icon (top-right) and choose Save Show to save your current settings to a show file"
+  }
+}

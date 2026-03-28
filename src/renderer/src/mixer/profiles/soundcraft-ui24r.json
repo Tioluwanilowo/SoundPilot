@@ -1,0 +1,91 @@
+{
+  "id": "soundcraft-ui24r",
+  "brand": "Soundcraft",
+  "model": "Ui24R",
+  "type": "digital",
+  "channelCount": 24,
+  "usbAudioInterface": {
+    "supported": true,
+    "totalChannels": 32,
+    "inputChannels": 32,
+    "outputChannels": 32,
+    "driverRequired": {
+      "windows": true,
+      "driverName": "Soundcraft Multi-Channel USB Audio Driver",
+      "driverUrl": "https://www.soundcraft.com/en-US/softwares/multi-channelusbaudio_driversetup_v3-23-0",
+      "mac": false,
+      "macNote": "Class-compliant — Mac recognises Ui24R as an audio interface automatically. No driver needed."
+    },
+    "sampleRate": 48000,
+    "channelMap": {
+      "usb1": "Main L",
+      "usb2": "Main R",
+      "usb3": "Aux Bus 1",
+      "usb4": "Aux Bus 2",
+      "usb5": "Aux Bus 3",
+      "usb6": "Aux Bus 4",
+      "usb7": "Aux Bus 5",
+      "usb8": "Aux Bus 6",
+      "usb9": "Aux Bus 7",
+      "usb10": "Aux Bus 8",
+      "usb11_32": "Input Channels 1–22 (individual pre-processed sends)"
+    },
+    "patchingNote": "In the Ui24R Settings menu, open the Patching tab and ensure the Channels button is highlighted along with the USB DAW 1-16 and 17-32 buttons to enable all channel sends."
+  },
+  "controlNotes": "The Soundcraft Ui24R is a 24-channel rack-mount digital mixer with a built-in 32×32 USB audio interface. It can stream all 22 input channels plus the main L/R mix and 8 aux buses simultaneously to any DAW over USB. On Mac it is class-compliant — no driver required. On Windows, install the Soundcraft Multi-Channel USB Audio Driver from soundcraft.com before connecting. Set your DAW sample rate to 48kHz. USB inputs 1–10 carry the masters (Main L/R, Aux 1–8); USB inputs 11–32 carry individual input channels 1–22. Use the Patching tab in the Ui24R Settings menu to configure USB DAW routing. The mixer is also controlled via browser over Wi-Fi or Ethernet — open Chrome and navigate to the mixer's IP address (shown on the front-panel display, default 192.168.1.1 / ui24r.local). Each channel has a fully parametric 4-band EQ, sweepable HPF, gate, compressor, and delay. Phantom power (+48V) is per-channel in the Preamp tab. Outputs include LR main, 10 stereo aux mixes, and an independent mono sub. A 31-band graphic EQ is available on all output busses.",
+  "hpf": {
+    "available": true,
+    "sweepable": true,
+    "frequencyRange": [20, 500]
+  },
+  "eqBands": [
+    {
+      "id": "hf",
+      "name": "HF",
+      "type": "shelf_high",
+      "frequencyRange": [2000, 20000],
+      "defaultFrequency": 10000,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    },
+    {
+      "id": "hi-mid",
+      "name": "Hi-Mid",
+      "type": "peaking",
+      "frequencyRange": [500, 15000],
+      "defaultFrequency": 3000,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "lo-mid",
+      "name": "Lo-Mid",
+      "type": "peaking",
+      "frequencyRange": [100, 3000],
+      "defaultFrequency": 500,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 2.0
+    },
+    {
+      "id": "lf",
+      "name": "LF",
+      "type": "shelf_low",
+      "frequencyRange": [20, 500],
+      "defaultFrequency": 80,
+      "gainRange": [-18, 18],
+      "qRange": [0.3, 10],
+      "defaultQ": 0.7
+    }
+  ],
+  "instructionTemplates": {
+    "selectChannel": "In the Soundcraft Ui app, tap the CH {channel} strip at the top of the mixer view to select it",
+    "openEQ": "In the channel processing view, tap the EQ tab to open the 4-band parametric EQ display",
+    "enableHPF": "Tap the HPF button in the EQ section to enable the high-pass filter, then drag or double-tap the HPF frequency control to set it to {frequency}Hz",
+    "setBandFrequency": "Tap the {band} band on the EQ curve, then drag the Frequency knob (or double-tap to enter a value) to {frequency}Hz",
+    "setBandGain": "With {band} selected, drag the Gain knob {direction} to approximately {amount}dB. The EQ response curve updates live.",
+    "saveSettings": "Tap the main menu (three-line icon, top-right) and select Save Show to overwrite your current show file, or Save Show As to create a new one"
+  }
+}
