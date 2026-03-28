@@ -26,3 +26,4 @@ npm-debug.log*
 # Env
 .env
 .env.local
+assets/_tmp/
