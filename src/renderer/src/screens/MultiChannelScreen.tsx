@@ -2,7 +2,7 @@ import React, { useState, useCallback }           from 'react'
 import { useAppStore }                            from '../store/appStore'
 import { useMultiChannelPipeline }               from '../hooks/useMultiChannelPipeline'
 import { ChannelCard }                           from '../components/ChannelCard'
-import type { ChannelSlotConfig }                from '@shared/types'
+import type { ChannelSlotConfig, AudioDeviceInfo } from '@shared/types'
 import { SOURCE_TYPE_LABELS }                    from '@shared/types'
 import type { SourceType }                       from '@shared/types'
 import {
@@ -10,6 +10,42 @@ import {
   getPresetsByBrand
 } from '@shared/constants/multichannel-presets'
 import type { MultiChannelPreset }               from '@shared/constants/multichannel-presets'
+
+// ── ASIO / DAW device detector ────────────────────────────────────────────────
+
+function AsioDetectorPanel({ devices }: { devices: AudioDeviceInfo[] }): React.ReactElement | null {
+  const asioDevices   = devices.filter(d => d.deviceClass === 'asio')
+  const virtualDevices = devices.filter(d => d.deviceClass === 'daw-virtual')
+
+  if (asioDevices.length === 0 && virtualDevices.length === 0) return null
+
+  return (
+    <div className="asio-detector">
+      <div className="asio-detector__title">
+        <span className="asio-detector__icon">◈</span>
+        DAW / ASIO Inputs Detected
+      </div>
+      <p className="asio-detector__hint">
+        The following devices can route audio directly from a DAW or low-latency ASIO driver.
+        Select one on the Setup screen to capture multi-channel DAW output.
+      </p>
+      <div className="asio-detector__list">
+        {asioDevices.map(d => (
+          <div key={d.deviceId} className="asio-device-row">
+            <span className="asio-badge asio-badge--asio">ASIO</span>
+            <span className="asio-device-row__label">{d.label}</span>
+          </div>
+        ))}
+        {virtualDevices.map(d => (
+          <div key={d.deviceId} className="asio-device-row">
+            <span className="asio-badge asio-badge--virtual">DAW Virtual</span>
+            <span className="asio-device-row__label">{d.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 const SOURCE_TYPE_OPTIONS: SourceType[] = [
   'male_vocal', 'female_vocal', 'speech',
@@ -304,6 +340,9 @@ export function MultiChannelScreen(): React.ReactElement {
     setActiveSlotId(null)
   }, [stopAll])
 
+  const selectedDevice = audioDevices.find(d => d.deviceId === deviceId)
+  const deviceClass    = selectedDevice?.deviceClass ?? 'standard'
+
   // ── Preset picker view ───────────────────────────────────────────────────────
   if (view === 'preset') {
     return (
@@ -312,7 +351,7 @@ export function MultiChannelScreen(): React.ReactElement {
           <div>
             <h2 className="mc-screen__title">Multi-Channel Mode</h2>
             <p className="mc-screen__subtitle">
-              Analyze all mixer inputs simultaneously via USB audio interface.
+              Analyze all mixer inputs simultaneously via USB audio interface or DAW routing.
               Each channel gets its own independent analysis and EQ suggestions.
             </p>
           </div>
@@ -321,8 +360,15 @@ export function MultiChannelScreen(): React.ReactElement {
         <div className="mc-device-strip">
           <span className="mc-device-strip__label">Audio device:</span>
           <span className="mc-device-strip__name">{deviceLabel}</span>
+          {deviceClass !== 'standard' && (
+            <span className={`asio-badge asio-badge--${deviceClass === 'asio' ? 'asio' : 'virtual'}`}>
+              {deviceClass === 'asio' ? 'ASIO' : 'DAW Virtual'}
+            </span>
+          )}
           <span className="mc-device-strip__hint">(change in Setup screen)</span>
         </div>
+
+        <AsioDetectorPanel devices={audioDevices} />
 
         <PresetPicker onSelect={handlePresetSelect} />
 
@@ -365,6 +411,11 @@ export function MultiChannelScreen(): React.ReactElement {
         <div className="mc-device-strip">
           <span className="mc-device-strip__label">Audio device:</span>
           <span className="mc-device-strip__name">{deviceLabel}</span>
+          {deviceClass !== 'standard' && (
+            <span className={`asio-badge asio-badge--${deviceClass === 'asio' ? 'asio' : 'virtual'}`}>
+              {deviceClass === 'asio' ? 'ASIO' : 'DAW Virtual'}
+            </span>
+          )}
           {mcDeviceInfo && (
             <span className="mc-device-strip__name">
               · {mcDeviceInfo.detectedChannelCount} ch detected

@@ -1,4 +1,33 @@
-import type { AudioDeviceInfo } from '@shared/types'
+import type { AudioDeviceInfo, AudioDeviceClass } from '@shared/types'
+
+// Label fragments that identify ASIO driver devices (case-insensitive)
+const ASIO_PATTERNS = [
+  'asio', 'steinberg low latency', 'yamaha usb asio', 'behringer asio',
+  'focusrite asio', 'motu asio', 'rme asio', 'universal audio asio',
+  'scarlett asio', 'ssl asio', 'presonus asio', 'audient asio'
+]
+
+// Label fragments that identify virtual / DAW routing devices
+const DAW_VIRTUAL_PATTERNS = [
+  'virtual', 'loopback', 'blackhole', 'soundflower',
+  'vb-audio', 'vb-cable', 'vb cable', 'voicemeeter',
+  'iac driver', 'iac bus', 'obs virtual', 'obs-audio',
+  'cable output', 'cable input', 'audio router',
+  'dante virtual', 'netio', 'wasapi loopback',
+  'rewire', 'jack audio', 'jack2', 'audiohijack',
+  'loopback audio', 'existential audio'
+]
+
+/**
+ * Classify an audio device from its label string.
+ * Returns 'asio', 'daw-virtual', or 'standard'.
+ */
+export function classifyDeviceLabel(label: string): AudioDeviceClass {
+  const l = label.toLowerCase()
+  if (ASIO_PATTERNS.some(p => l.includes(p))) return 'asio'
+  if (DAW_VIRTUAL_PATTERNS.some(p => l.includes(p))) return 'daw-virtual'
+  return 'standard'
+}
 
 /**
  * AudioDeviceManager — wraps the Web Audio / MediaDevices API for
@@ -10,7 +39,7 @@ import type { AudioDeviceInfo } from '@shared/types'
  */
 export class AudioDeviceManager {
   /**
-   * Returns all available audio input devices.
+   * Returns all available audio input devices, classified by driver type.
    * Triggers a permission prompt the first time if not already granted.
    */
   async getInputDevices(): Promise<AudioDeviceInfo[]> {
@@ -28,11 +57,15 @@ export class AudioDeviceManager {
     const devices = await navigator.mediaDevices.enumerateDevices()
     return devices
       .filter(d => d.kind === 'audioinput')
-      .map(d => ({
-        deviceId: d.deviceId,
-        label:    d.label || `Microphone (${d.deviceId.substring(0, 8)}…)`,
-        kind:     'audioinput' as const
-      }))
+      .map(d => {
+        const label = d.label || `Microphone (${d.deviceId.substring(0, 8)}…)`
+        return {
+          deviceId:    d.deviceId,
+          label,
+          kind:        'audioinput' as const,
+          deviceClass: classifyDeviceLabel(label)
+        }
+      })
   }
 
   /**

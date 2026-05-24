@@ -133,16 +133,78 @@ export const hardwareRules: HardwareRule[] = [
       return crestFactor > 20 && acc.averageLevelDb > -55 && !acc.clippingRisk
     },
     recommend: (acc) => {
-      const crest = Math.round(acc.peakLevelDb - acc.averageLevelDb)
+      const crest     = Math.round(acc.peakLevelDb - acc.averageLevelDb)
+      const threshold = Math.round(acc.averageLevelDb + 6)
       return {
-        id:           'hw-compression',
-        action:       'compression',
-        reason:       `Dynamic range is very wide (${crest} dB between average and peak). A compressor (ratio 3:1–4:1, threshold around ${Math.round(acc.averageLevelDb + 6)} dBFS) will even out the level and make the signal sit more consistently in the mix.`,
+        id:     'hw-compression',
+        action: 'compression',
+        reason: `Dynamic range is very wide (${crest} dB crest factor). Apply compression to level the signal and make it sit consistently in the mix.`,
+        compressorParams: {
+          threshold,
+          ratio:   4.0,
+          knee:    4.0,
+          mix:     100,
+          attack:  10,
+          hold:    0,
+          release: 200
+        },
         confidence:   0.7,
         priority:     4,
         relatedIssue: 'dynamics'
       }
     }
+  },
+
+  // ── Noise gate — signal drops out frequently ──────────────────────────────────
+  // Low signal percentage with a reasonable average level indicates noisy silences
+  {
+    id: 'hw-gate',
+    appliesTo: ['male_vocal', 'female_vocal', 'speech', 'acoustic_guitar',
+                'electric_guitar', 'snare', 'kick', 'drum_overhead'],
+    condition: (acc) =>
+      acc.signalPct < 0.65 && acc.signalPct > 0.1 &&
+      acc.averageLevelDb > -50 && !acc.clippingRisk,
+    recommend: (acc) => {
+      const threshold = Math.round(acc.averageLevelDb - 28)
+      return {
+        id:     'hw-gate',
+        action: 'gate',
+        reason: `Signal was absent ${Math.round((1 - acc.signalPct) * 100)}% of the listening window. A noise gate will mute the channel during silences and keep background noise out of the mix.`,
+        gateParams: {
+          threshold,
+          ratio:   10.0,
+          knee:    2.0,
+          mix:     100,
+          attack:  5,
+          hold:    100,
+          release: 300
+        },
+        confidence:   0.65,
+        priority:     4,
+        relatedIssue: 'dynamics'
+      }
+    }
+  },
+
+  // ── Occasional peaks — suggest limiter ────────────────────────────────────────
+  // Low-level clipping (2–10% of frames) that gain reduction alone won't fully fix
+  {
+    id: 'hw-limiter',
+    appliesTo: 'all',
+    condition: (acc) => acc.clippingPct > 0.02 && acc.clippingPct <= 0.1,
+    recommend: (_acc) => ({
+      id:     'hw-limiter',
+      action: 'limit',
+      reason: `Occasional peaks are clipping the signal. A limiter set just below 0 dBFS will catch these transients without affecting the overall level.`,
+      limiterParams: {
+        threshold: -3,
+        attack:    1,
+        hold:      10
+      },
+      confidence:   0.75,
+      priority:     2,
+      relatedIssue: 'level'
+    })
   }
 
 ]

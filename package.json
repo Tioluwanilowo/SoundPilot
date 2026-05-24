@@ -1,6 +1,6 @@
 {
   "name": "soundpilot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Live audio analysis and mixer EQ suggestion tool for musicians and live sound engineers",
   "main": "out/main/index.js",
   "scripts": {

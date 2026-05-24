@@ -144,7 +144,7 @@ export function SettingsScreen(): React.ReactElement {
         <section className="settings-section">
           <h2 className="settings-section__title">About</h2>
           <div className="about-box">
-            <p><strong>SoundPilot</strong> v0.1.0</p>
+            <p><strong>SoundPilot</strong> v0.2.0</p>
             <p>Local audio analysis and mixer EQ suggestion tool.</p>
             <p>Designed for musicians, churches, rehearsals, and small live sound setups.</p>
             <hr className="about-divider" />

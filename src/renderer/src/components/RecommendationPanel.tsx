@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppStore } from '../store/appStore'
-import type { SuggestionItem, EQAction } from '@shared/types'
+import type { SuggestionItem, EQAction, CompressorParams, GateParams, LimiterParams } from '@shared/types'
 
 // ── Action display config ─────────────────────────────────────────────────────
 
@@ -17,7 +17,9 @@ const ACTION_LABEL: Record<EQAction, string> = {
   check_cable:         'Check Cable',
   check_gain_structure:'Check Gain',
   mic_position:        'Reposition Mic',
-  compression:         'Add Compression'
+  compression:         'Compressor',
+  gate:                'Noise Gate',
+  limit:               'Limiter'
 }
 
 const ACTION_CLASS: Record<EQAction, string> = {
@@ -33,7 +35,49 @@ const ACTION_CLASS: Record<EQAction, string> = {
   check_cable:         'tag--orange',
   check_gain_structure:'tag--orange',
   mic_position:        'tag--purple',
-  compression:         'tag--purple'
+  compression:         'tag--purple',
+  gate:                'tag--purple',
+  limit:               'tag--orange'
+}
+
+// ── DSP param grids ───────────────────────────────────────────────────────────
+
+function CompressorGrid({ p }: { p: CompressorParams }): React.ReactElement {
+  return (
+    <div className="dsp-params dsp-params--compressor">
+      <div className="dsp-param"><span className="dsp-param__label">Threshold</span><span className="dsp-param__value">{p.threshold} dBFS</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Ratio</span><span className="dsp-param__value">{p.ratio}:1</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Knee</span><span className="dsp-param__value">{p.knee} dB</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Mix</span><span className="dsp-param__value">{p.mix}%</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Attack</span><span className="dsp-param__value">{p.attack} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Hold</span><span className="dsp-param__value">{p.hold} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Release</span><span className="dsp-param__value">{p.release} ms</span></div>
+    </div>
+  )
+}
+
+function GateGrid({ p }: { p: GateParams }): React.ReactElement {
+  return (
+    <div className="dsp-params dsp-params--gate">
+      <div className="dsp-param"><span className="dsp-param__label">Threshold</span><span className="dsp-param__value">{p.threshold} dBFS</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Ratio</span><span className="dsp-param__value">{p.ratio}:1</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Knee</span><span className="dsp-param__value">{p.knee} dB</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Mix</span><span className="dsp-param__value">{p.mix}%</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Attack</span><span className="dsp-param__value">{p.attack} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Hold</span><span className="dsp-param__value">{p.hold} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Release</span><span className="dsp-param__value">{p.release} ms</span></div>
+    </div>
+  )
+}
+
+function LimiterGrid({ p }: { p: LimiterParams }): React.ReactElement {
+  return (
+    <div className="dsp-params dsp-params--limiter">
+      <div className="dsp-param"><span className="dsp-param__label">Threshold</span><span className="dsp-param__value">{p.threshold} dBFS</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Attack</span><span className="dsp-param__value">{p.attack} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Hold</span><span className="dsp-param__value">{p.hold} ms</span></div>
+    </div>
+  )
 }
 
 // ── Individual suggestion card ────────────────────────────────────────────────
@@ -63,6 +107,9 @@ function SuggestionCard({ item, index }: { item: SuggestionItem; index: number }
           {ACTION_LABEL[rec.action]}
         </span>
         {freqLabel && <span className="suggestion-card__freq">{freqLabel}</span>}
+        {rec.eqBand !== undefined && (
+          <span className="suggestion-card__band" title="EQ Band number">Band {rec.eqBand}</span>
+        )}
         {rec.amount !== undefined && (
           <span className={`suggestion-card__amount ${rec.amount >= 0 ? 'suggestion-card__amount--boost' : 'suggestion-card__amount--cut'}`}>
             {rec.amount > 0 ? '+' : ''}{rec.amount.toFixed(1)} dB
@@ -71,6 +118,10 @@ function SuggestionCard({ item, index }: { item: SuggestionItem; index: number }
       </div>
 
       <p className="suggestion-card__reason">{rec.reason}</p>
+
+      {rec.compressorParams && <CompressorGrid p={rec.compressorParams} />}
+      {rec.gateParams       && <GateGrid      p={rec.gateParams} />}
+      {rec.limiterParams    && <LimiterGrid   p={rec.limiterParams} />}
 
       {isPending && (
         <div className="suggestion-card__actions">

@@ -21,8 +21,38 @@ export type EQAction =
   | 'mic_position'           // Adjust microphone distance / angle
   // ── Dynamics ───────────────────────────────────────────────────────────────
   | 'compression'            // Apply compression to control dynamics
+  | 'gate'                   // Apply noise gate to reduce background noise
+  | 'limit'                  // Apply limiter to control peak transients
 
 export type BandwidthType = 'narrow' | 'medium' | 'wide' | 'shelf'
+
+// ── DSP Parameter Interfaces ─────────────────────────────────────────────────
+
+export interface CompressorParams {
+  threshold: number   // dBFS (e.g. -18)
+  ratio:     number   // e.g. 4 means 4:1
+  knee:      number   // dB soft-knee width; 0 = hard knee
+  mix:       number   // 0–100% wet/dry
+  attack:    number   // ms
+  hold:      number   // ms
+  release:   number   // ms
+}
+
+export interface GateParams {
+  threshold: number   // dBFS — gate closes below this level
+  ratio:     number   // e.g. 10 means 10:1
+  knee:      number   // dB
+  mix:       number   // 0–100%
+  attack:    number   // ms
+  hold:      number   // ms
+  release:   number   // ms
+}
+
+export interface LimiterParams {
+  threshold: number   // dBFS ceiling (e.g. -3)
+  attack:    number   // ms (usually very fast)
+  hold:      number   // ms
+}
 
 /**
  * A generic, mixer-agnostic recommendation.
@@ -37,6 +67,14 @@ export interface GenericRecommendation {
   // Gain change in dB (positive = boost, negative = cut). EQ only.
   amount?: number
   bandwidth?: BandwidthType
+  // EQ band number (1–6) for mixers with numbered parametric EQ bands.
+  // Band 1 = HPF, Band 2 = Low, Band 3 = Low-Mid, Band 4 = Mid,
+  // Band 5 = High-Mid/Presence, Band 6 = High/Air.
+  eqBand?: number
+  // Specific parameters for dynamics processors
+  compressorParams?: CompressorParams
+  gateParams?: GateParams
+  limiterParams?: LimiterParams
   // Human-readable explanation, written for a live sound beginner
   reason: string
   // 0–1: how strongly the accumulated data supports this recommendation

@@ -1,9 +1,14 @@
 // Audio device and capture types
 
+/** How a device was classified by AudioDeviceManager */
+export type AudioDeviceClass = 'asio' | 'daw-virtual' | 'standard'
+
 export interface AudioDeviceInfo {
   deviceId: string
   label: string
   kind: 'audioinput' | 'audiooutput'
+  /** Detected driver/routing class — populated by AudioDeviceManager */
+  deviceClass?: AudioDeviceClass
 }
 
 export interface AudioCaptureConfig {

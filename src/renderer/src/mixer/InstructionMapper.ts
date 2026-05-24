@@ -83,6 +83,40 @@ export class InstructionMapper {
       steps.push({ step: step++, text: `On CH ${channel}, set the source gain so that peaks hit around -18 to -12 dBFS.`, detail: 'This leaves 12–18 dB of headroom before clipping.' })
     }
 
+    else if (action === 'gate') {
+      steps.push({ step: step++, text: this.fill(profile.instructionTemplates.selectChannel ?? 'Locate Channel {channel}', { channel }) })
+      const gp = recommendation.gateParams
+      if (profile.type === 'digital') {
+        steps.push({ step: step++, text: `On CH ${channel}, open the Dynamics / Gate section.`, detail: 'Typically found alongside the compressor in the channel processing view.' })
+        if (gp) {
+          steps.push({ step: step++, text: `Set Threshold to ${gp.threshold} dBFS.`, detail: 'Gate opens when signal exceeds this level, closes during silence.' })
+          steps.push({ step: step++, text: `Set Ratio to ${gp.ratio}:1, Knee ${gp.knee} dB, Mix ${gp.mix}%.` })
+          steps.push({ step: step++, text: `Set Attack ${gp.attack} ms, Hold ${gp.hold} ms, Release ${gp.release} ms.`, detail: 'Hold prevents chattering during brief pauses; Release controls how fast the gate closes.' })
+        }
+        steps.push({ step: step++, text: 'Enable the gate and verify it closes cleanly during silences without cutting off notes.' })
+      } else {
+        steps.push({ step: step++, text: `If CH ${channel} has an insert, patch an outboard gate unit in the insert loop.` })
+        if (gp) {
+          steps.push({ step: step++, text: `Set threshold to approximately ${gp.threshold} dBFS, attack ${gp.attack} ms, release ${gp.release} ms.` })
+        }
+      }
+    }
+
+    else if (action === 'limit') {
+      steps.push({ step: step++, text: this.fill(profile.instructionTemplates.selectChannel ?? 'Locate Channel {channel}', { channel }) })
+      const lp = recommendation.limiterParams
+      if (profile.type === 'digital') {
+        steps.push({ step: step++, text: `On CH ${channel}, find the Limiter section (may be inside Dynamics or as a separate processor).` })
+        if (lp) {
+          steps.push({ step: step++, text: `Set Threshold to ${lp.threshold} dBFS.`, detail: 'This acts as a hard ceiling — no signal will pass above this level.' })
+          steps.push({ step: step++, text: `Set Attack to ${lp.attack} ms and Hold to ${lp.hold} ms.`, detail: 'Very fast attack ensures no transient peaks escape the limiter.' })
+        }
+        steps.push({ step: step++, text: 'Enable the limiter and check that the gain reduction meter catches occasional peaks only — not constant reduction.' })
+      } else {
+        steps.push({ step: step++, text: `On an analog desk, use the channel insert to patch a limiter (set threshold to ${lp ? lp.threshold : '-3'} dBFS).` })
+      }
+    }
+
     // ── EQ actions ────────────────────────────────────────────────────────────
     else {
       // Step 1: Select channel

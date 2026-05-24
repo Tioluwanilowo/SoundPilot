@@ -1,7 +1,47 @@
 import React, { useRef, useEffect, useCallback } from 'react'
-import type { ChannelSlotConfig, ChannelSlotState, SuggestionItem } from '@shared/types'
+import type { ChannelSlotConfig, ChannelSlotState, SuggestionItem, CompressorParams, GateParams, LimiterParams } from '@shared/types'
 import { useAppStore } from '../store/appStore'
 import { SOURCE_TYPE_LABELS } from '@shared/types'
+
+// ── DSP param mini-grids (reused in channel cards) ────────────────────────────
+
+function CompressorGrid({ p }: { p: CompressorParams }): React.ReactElement {
+  return (
+    <div className="dsp-params dsp-params--compressor">
+      <div className="dsp-param"><span className="dsp-param__label">Threshold</span><span className="dsp-param__value">{p.threshold} dBFS</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Ratio</span><span className="dsp-param__value">{p.ratio}:1</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Knee</span><span className="dsp-param__value">{p.knee} dB</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Mix</span><span className="dsp-param__value">{p.mix}%</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Attack</span><span className="dsp-param__value">{p.attack} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Hold</span><span className="dsp-param__value">{p.hold} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Release</span><span className="dsp-param__value">{p.release} ms</span></div>
+    </div>
+  )
+}
+
+function GateGrid({ p }: { p: GateParams }): React.ReactElement {
+  return (
+    <div className="dsp-params dsp-params--gate">
+      <div className="dsp-param"><span className="dsp-param__label">Threshold</span><span className="dsp-param__value">{p.threshold} dBFS</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Ratio</span><span className="dsp-param__value">{p.ratio}:1</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Knee</span><span className="dsp-param__value">{p.knee} dB</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Mix</span><span className="dsp-param__value">{p.mix}%</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Attack</span><span className="dsp-param__value">{p.attack} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Hold</span><span className="dsp-param__value">{p.hold} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Release</span><span className="dsp-param__value">{p.release} ms</span></div>
+    </div>
+  )
+}
+
+function LimiterGrid({ p }: { p: LimiterParams }): React.ReactElement {
+  return (
+    <div className="dsp-params dsp-params--limiter">
+      <div className="dsp-param"><span className="dsp-param__label">Threshold</span><span className="dsp-param__value">{p.threshold} dBFS</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Attack</span><span className="dsp-param__value">{p.attack} ms</span></div>
+      <div className="dsp-param"><span className="dsp-param__label">Hold</span><span className="dsp-param__value">{p.hold} ms</span></div>
+    </div>
+  )
+}
 
 interface ChannelCardProps {
   config:    ChannelSlotConfig
@@ -137,6 +177,9 @@ function SlotSuggestionPanel({
               {rec.frequency && (
                 <span className="sug-freq">{formatFreq(rec.frequency)}</span>
               )}
+              {rec.eqBand !== undefined && (
+                <span className="sug-band" title="EQ Band">B{rec.eqBand}</span>
+              )}
               {rec.amount && (
                 <span className="sug-amount">
                   {rec.amount > 0 ? '+' : ''}{rec.amount.toFixed(1)} dB
@@ -146,6 +189,10 @@ function SlotSuggestionPanel({
             </div>
 
             <p className="slot-sug-card__reason">{rec.reason}</p>
+
+            {rec.compressorParams && <CompressorGrid p={rec.compressorParams} />}
+            {rec.gateParams       && <GateGrid      p={rec.gateParams} />}
+            {rec.limiterParams    && <LimiterGrid   p={rec.limiterParams} />}
 
             {item.mixerSteps && item.mixerSteps.length > 0 && (
               <ol className="slot-sug-card__steps">
